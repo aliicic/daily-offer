@@ -1,0 +1,337 @@
+
+
+
+
+* {
+     margin: 0;
+   /* padding: 0; */
+    /*box-sizing: border-box; */
+    text-decoration: none;
+} 
+
+* {
+            font-family: Estedad;
+         
+}
+
+/* Large devices (desktops, less than 1200px) */
+@media (max-width: 1199.98px) { 
+   html{ font-size: 16px!important;}
+ }
+  /* Medium devices (tablets, less than 992px) */
+@media (max-width: 991.98px) { 
+   html{ font-size: 14px!important;}
+ }
+ /* Small devices (landscape phones, less than 768px) */
+@media (max-width: 767.98px) { 
+  html{ font-size: 10px!important;}
+ } 
+  /* Extra small devices (portrait phones, less than 576px) */
+/* @media (max-width: 575.98px) { 
+  html{ font-size: 9px!important;}
+ } */
+body{
+    direction: rtl;
+}
+.container{
+    
+       background-image: url('../images/background.jpg');
+       padding: 0 10px;
+   }
+@media(max-width:992px){
+   .container{
+       background-repeat: no-repeat;
+       background-size: cover;
+   } 
+}   
+.content{
+    /* display: flex;
+    justify-content: center; */
+    max-width: 1400px;
+    /* height: 530px; */
+    margin: 0 auto;
+}
+
+.firstRow{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+@media(max-width:992px){
+  .firstRow{
+    width: 100%;
+    display: inline;
+    /* margin-bottom: 5px; */
+    /* justify-content: center; */
+} 
+.rightContent {
+   margin-bottom: 15px;  
+}
+}
+.rightContent {
+    display: inline;
+    height: 100px;
+    color: white;
+    margin-left: auto;
+     text-align: right!important;
+     /* margin-right: auto; */
+}
+
+.leftContent {
+    height: 100px;
+    
+    /* margin-right: 0; */
+}
+.offerBox{
+    background: white;
+    padding:10px 15px;
+    border-radius: 25px;
+    margin-top: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    display: inline-block;
+}
+.offerBox img{
+    width: 1rem;
+}
+.offerBox .code{
+    margin: 0 7px;
+    color :#1769FF;
+}
+.timer{
+    display: inline-block;
+    margin-bottom: 25px;
+}
+.cnFrame{
+    background: black;
+    display: inline;
+    position: relative;
+    padding: 5px 20px;
+     border-radius: 10px;
+     margin: 0 6px;
+    
+}
+.cnFrame:last-child{
+    margin-left: 0;
+}
+.timeNum{
+    
+    
+     position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    color: white;
+    font-size: 1.2rem;
+}
+.viewAll
+{
+    text-align: left;
+    font-size: .9rem;
+    cursor: pointer;
+}
+@media(max-width:992px){
+    .offerBox{
+          padding:10px 10px;
+    }
+    .leftContent{
+        display: inline;
+    }
+    .viewAll{
+        display: inline-block;
+        margin: 0 auto ;
+        text-align: center!important;
+        font-size: 1rem;
+    }
+    .timeNum{ font-size: 1rem;}
+    .cnFrame{
+    background: black;
+    display: inline;
+    position: relative;
+    padding: 3px 12px;
+     border-radius: 8px;
+     margin: 0 3px;
+    
+}
+.cnFrame:last-child{
+    margin-left: 5px;
+}
+
+}
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 140px;
+  background-color: rgba(85, 85, 85, 0.301);
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  top: 150%;
+  left: 50%;
+  margin-left: -75px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-size: .8rem;
+}
+
+.tooltip .tooltiptext::before {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color:  transparent transparent rgba(85, 85, 85, 0.301) transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+
+/* .scroll-bar { 
+      display: flex;
+         align-items: center; 
+     } */
+.secondRow{
+    
+    /* width: 100%; */
+    display: flex;    overflow-x: auto;
+   
+  /* direction: rtl; */
+    align-items: stretch;
+    justify-content: space-between; 
+      
+}
+.secondRow::-webkit-scrollbar {    display: none;}
+.secondRow .item {
+    padding: 10px;
+    
+    display: inline;
+    /* height: 200px;  */
+    /* width: 200px; */
+
+
+
+}
+.endtitle{
+    color: #dc3958;
+    font-size: .8rem;
+    background-color: white;
+    padding: 5px 25px;
+    border-radius: 20px;
+    position: absolute;
+       left: 50%;
+    top: 50%;
+    z-index: 100;
+    transform: translate(-50%,-50%);
+    visibility: hidden;
+}
+ .ended .endtitle{
+     visibility: visible!important;
+ }
+ .ended .heading a ,.bottomRow {
+    color: #8d8d8d!important;
+}
+
+
+ .ended .imageFrame img {
+    filter: grayscale(100%);
+}
+ .ended .bottomRow img{
+     opacity: .5;
+ }
+ .ended .dicount{
+     visibility: hidden;
+ }
+
+
+.secondRow .item:last-child {
+    padding-left: 0!important;
+}
+.secondRow .item:first-child {
+    padding-right: 0!important;
+}
+.secondRow .product {
+  /* padding: 0 2px 5px 2px;   */
+  background-color: white;
+  height: 100%;
+  border: 1px solid white;
+  border-radius: 20px;
+}
+.product .imageFrame {
+    border-radius: 20px;
+    max-width: 200px;
+    position: relative;
+}
+.product .imageFrame img {
+    width: 100%;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    height: 100%;
+}
+@media(max-width:992px){
+   .product .imageFrame img {
+       width: 200px;
+   } 
+}
+.productsContent{
+    padding: 10px 10px 5px 10px;
+    text-align: right;
+}
+.heading {
+    margin-bottom: 12px;
+    height: 25px;
+    overflow: hidden;
+}
+.productsContent .title{
+ color: black;
+ font-size: .9rem;
+ 
+ line-height:.5;
+}
+.productsContent .desc ,.productsContent .desc a{
+ color: #8d8d8d!important;
+     height: 20px;
+    overflow: hidden;
+    margin-bottom: 30px;
+    font-size: .8rem;
+    font-weight: 300;
+}
+.dicount{
+    text-align: left;
+}
+.dicount .percent {
+    background-color: #e24c6c;
+    padding: 2px 8px;
+    font-size: .6rem;
+    border-radius: 10px;
+    color: white;
+
+}
+.dicount  .min{
+    text-decoration: line-through;
+    font-size: .7rem;
+    color: #8d8d8d;
+    margin-left: 5px;
+}
+.price{
+   padding: 5px; 
+}
+.bottomRow{
+    padding-top: 7px;
+    display: flex;
+}
+.more{
+    margin-left: auto;
+}
