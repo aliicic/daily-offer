@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fa">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,309 +8,289 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <title>Document</title>
 </head>
+
 <body>
+     <div id="app">
+        <div class="container">
+            <div class="content">
+                <div class="firstRow">
+                    <div class="rightContent">
+                        <h1> یک تخفیف هیجان انگیز! + ارسال رایگان </h1>
+                        <p>(تا سقف 50 هزار تومان)</p>
+                    </div>
+                    <div class="leftContent">
+                        <div class="offerBox"><span>کد تخفیف:</span><span><span class="code"
+                                    id="offercode">dailyoffer</span><span class="tooltip"><img  @click="copycode"
+                                        @mousenter="outFunc" id="copy" src="assets/images/copy.svg" alt=""><span
+                                        class="tooltiptext" id="myTooltip">کپی شود؟</span></span></span></div>
+                        <div class="timer" id="counter">
+                            <div class="cnFrame">
+                                <span id="s" class="timeNum seconds">{{timeCounter.s}}</span>
+                            </div>
+        
+                            <b style="font-weight: 900;font-size:1.5rem; margin: 1px;">:</b>
+        
+                            <div class="cnFrame">
+                                <span id="m" class="timeNum minutes"></span>
+                            </div>
+        
+                            <b style="font-weight: 900;font-size:1.5rem; margin: 1px;">:</b>
+        
+                            <div class="cnFrame">
+                                <span id="h" class="timeNum hours"></span>
+                            </div>
+                        </div>
+                        <div class="viewAll">
+                            <span>مشاهده همه</span>
+                        </div>
+                    </div>
+        
+        
+                </div>
+                <!-- <div class="scroll-bar"> -->
+                <div class="secondRow" id="productsRow" :style="style" >
+                    <div v-for="(product, index) in products" :key="product"   :class="[ !product.status ? 'ended' : 'react' , 'item']" >
+                        <div class="product">
+                            <div class="imageFrame">
+                                <a class="endtitle" href="">تمام شد </a>
+                                <img v-bind:src="product.img" alt="">
+                            </div>
+                            <div class="productsContent">
+                                <div class="heading">
+                                    <a href="#" class="title">
+                                        {{product.name}}
+                                    </a>
+                                </div>
+                                <div class="desc">
+                                    <span>غرفه:</span>
+                                    <a href="#">{{product.store}}</a>
+                                </div>
+                                <div class="dicount">
+                                    <span class="min">{{product.price}}</span>
+                                    <span class="percent">{{product.discount}}</span>
+                                </div>
+                                <div class="bottomRow">
+                                    <div class="more">:</div>
+                                    <div><span class="price">{{product.finalPrice}}</span><span><img src="assets/images/toman.svg"
+                                                alt=""></span></div>
+        
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+  
+        
+        
+                </div>
+                <!-- </div>     -->
+        
+            </div>
+
+      
+        </div>
+
+     <div class="adminPanel" style="background:rgb(229, 229, 248) ;padding:20px 50px">
+     <h3 style="text-align: center; margin-top: 50px; margin-bottom: 100px;">مدیریت محصولات دارای تخفیف </h3>
+     <h3 style="text-align: center;margin-bottom:50px">اضافه کردن محصول جدید</h3>
+     <div class="controller-box" style="display: flex;justify-content: space-between; align-items: stretch; ">
+     <label>نام محصول:</label>
+     <input type="text" v-model="NameInput" >
+     <label> نام غرفه:</label>
+     <input type="text" v-model="StoreInput">
+     <label> قیمت محصول:</label>
+     <input type="text" v-model="PriceInput">
+     <label> میزان تخفیف:</label>
+     <input type="text" v-model="DiscountInput">
+     <label> تصویر محصول :</label>
+     <input type="text" v-model="ImageInput">
     
-<div class="container">
-    <div class="content">
-    <div class="firstRow">
-        <div class="rightContent">
-            <h1>یک تخفیف هیجان انگیز! + ارسال رایگان</h1>
-            <p>(تا سقف 50 هزار تومان)</p>
-        </div>
-    <div class="leftContent">
-    <div class="offerBox"><span>کد تخفیف:</span><span><span class="code" id="offercode">dailyoffer</span><span class="tooltip"><img onclick="myFunction()" onmouseout="outFunc()" id="copy" src="assets/images/copy.svg" alt=""><span class="tooltiptext" id="myTooltip">کپی شود؟</span></span></span></div>
-    <div class="timer" id="counter">
-    <div class="cnFrame">
-        <span id="s" class="timeNum seconds"></span>
-       </div>
-        
-        <b style="font-weight: 900;font-size:1.5rem; margin: 1px;">:</b>  
+    </div>
+    <button @click="addToLis" style="display: block;margin: 30px auto; background:#dc3958; outline:none; border: 1px solid white; border-radius: 20px; padding: 10px 40px;"> ثبت محصول</button>
+   
+    <ul><li v-for="(product, index) in products" :key="product"> نام محصول : {{product.name}}  غرفه : {{product.store}}  قیمت : {{product.price}} تخفیف: {{product.discount}} <span @click="deleteFromList">حذف محصول</span> <span @click="status(index)"> {{ product.status ? 'موجود' : "ناموجود"}}  </span></li></ul>
 
-        <div class="cnFrame">
-        <span id="m" class="timeNum minutes"></span></div>
-        
-        <b style="font-weight: 900;font-size:1.5rem; margin: 1px;">:</b>
-         
-        <div class="cnFrame">
-        <span id="h" class="timeNum hours"></span>
-        </div>
-    </div>
-    <div class="viewAll">
-        <span>مشاهده همه</span>
-    </div>
-</div>
- 
-
-    </div>
-    <!-- <div class="scroll-bar"> -->
-        <div class="secondRow">
-            <div class="item">
-                <div class="product">
-                    <div class="imageFrame">
-                        <a class="endtitle" href="">تمام شد </a>
-                        <img src="assets/images/product-1.jpg" alt="">
-                    </div>
-                    <div class="productsContent">
-                        <div class="heading">
-                            
-                            <a href="#" class="title">نان مغزدار شکلاتی (کروسان)
-                            </a>
-        
-                        </div>
-                        <div class="desc">
-                            <span>غرفه:</span>
-                            <a href="#">خانه کیک آیناز</a>
-        
-        
-                        </div>
-                        <div class="dicount">
-                            <span class="min">48.000</span>
-                            <span class="percent">20%</span>
-                           
-                        </div>
-                        <div class="bottomRow">
-                            <div class="more">:</div>
-                            <div><span class="price">36.000</span><span><img src="assets/images/toman.svg" alt=""></span></div>
-                           
-                        </div>
-        
-        
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="product">
-                    <div class="imageFrame">
-                        <a class="endtitle" href="">تمام شد </a>
-                        <img src="assets/images/product-2.jpg" alt="">
-                    </div>
-                    <div class="productsContent">
-                        <div class="heading">
-                            <a href="#" class="title">باقلوا اعلا و درجه 1 یزدی
-                            </a>
-            
-                        </div>
-                        <div class="desc">
-                            <span>غرفه:</span>
-                            <a href="#">شیرینی حاج شهرام یزد</a>
-            
-            
-                        </div>
-                        <div class="dicount">
-                            <span class="min">54.000</span>
-                            <span class="percent">27%</span>
-            
-                        </div>
-                        <div class="bottomRow">
-                            <div class="more">:</div>
-                            <div><span class="price">39.500</span><span><img src="assets/images/toman.svg" alt=""></span></div>
-            
-                        </div>
-            
-            
-                    </div>
-                </div>
-            </div>
-            <div class="item ">
-                <div class="product">
-                    <div class="imageFrame">
-                        <a class="endtitle" href="">تمام شد </a>
-                        <img src="assets/images/product-3.jpg" alt="">
-                    </div>
-                    <div class="productsContent">
-                        <div class="heading">
-                            <a href="#" class="title">توت خشک ارگانیک و محلی 1 کیلویی
-                            </a>
-            
-                        </div>
-                        <div class="desc">
-                            <span>غرفه:</span>
-                            <a href="#">  ادویه و خشک بار ناز گل روستانی ایکس</a>
-            
-            
-                        </div>
-                        <div class="dicount">
-                            <span class="min">58.000</span>
-                            <span class="percent">16%</span>
-            
-                        </div>
-                        <div class="bottomRow">
-                            <div class="more">:</div>
-                            <div><span class="price">48.500</span><span><img src="assets/images/toman.svg" alt=""></span></div>
-            
-                        </div>
-            
-            
-                    </div>
-                </div>
-            </div>
-            <div class="item ended">
-                <div class="product">
-                    <div class="imageFrame">
-                        <a class="endtitle" href="">تمام شد </a>
-                        <img src="assets/images/product-4.jpg" alt="">
-                    </div>
-                    <div class="productsContent">
-                        <div class="heading">
-                            <a href="#" class="title">رومیزی ترمه بختیاری
-                            </a>
-            
-                        </div>
-                        <div class="desc">
-                            <span>غرفه:</span>
-                            <a href="#">ترمه النا یزد</a>
-            
-            
-                        </div>
-                        <div class="dicount">
-                            <span class="min">70.000</span>
-                            <span class="percent">34%</span>
-            
-                        </div>
-                        <div class="bottomRow">
-                            <div class="more">:</div>
-                            <div><span class="price">46.000</span><span><img src="assets/images/toman.svg" alt=""></span></div>
-            
-                        </div>
-            
-            
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="product">
-                    <div class="imageFrame">
-                        <a class="endtitle" href="">تمام شد </a>
-                        <img src="assets/images/product-5.jpg" alt="">
-                    </div>
-                    <div class="productsContent">
-                        <div class="heading">
-                            <a href="#" class="title">مزیتون درجه 1 فدک
-                            </a>
-            
-                        </div>
-                        <div class="desc">
-                            <span>غرفه:</span>
-                            <a href="#">مزرعه زیتون فدک</a>
-            
-            
-                        </div>
-                        <div class="dicount">
-                            <span class="min">18.000</span>
-                            <span class="percent">6%</span>
-            
-                        </div>
-                        <div class="bottomRow">
-                            <div class="more">:</div>
-                            <div><span class="price">17.000</span><span><img src="assets/images/toman.svg" alt=""></span></div>
-            
-                        </div>
-            
-            
-                    </div>
-                </div>
-            </div>
-            <div class="item ended">
-                <div class="product">
-                    <div class="imageFrame">
-                        <a class="endtitle" href="">تمام شد </a>
-                        <img src="assets/images/product-6.jpg" alt="">
-                    </div>
-                    <div class="productsContent">
-                        <div class="heading">
-                            <a href="#" class="title">زعفران نگین 1 مثقالی
-                            </a>
-            
-                        </div>
-                        <div class="desc">
-                            <span>غرفه:</span>
-                            <a href="#">محصولات روستایی سبز رود</a>
-            
-            
-                        </div>
-                        <div class="dicount">
-                            <span class="min">36.000</span>
-                            <span class="percent">34%</span>
-            
-                        </div>
-                        <div class="bottomRow">
-                            <div class="more">:</div>
-                            <div><span class="price">43.000</span><span><img src="assets/images/toman.svg" alt=""></span></div>
-            
-                        </div>
-            
-            
-                    </div>
-                </div>
-            </div>
-            
-        
-        </div>
-    <!-- </div>     -->
-
-    </div>
 </div>
 
-<script>
-    function getTimeRemaining(endtime) {
-        const total = Date.parse(endtime) - Date.parse(new Date());
-        const seconds = Math.floor((total / 1000) % 60);
-        const minutes = Math.floor((total / 1000 / 60) % 60);
-        const hours = Math.floor((total / (1000 * 60 * 60)) % 24);
+     </div>
+
+
+
+
+    <script src="https://unpkg.com/vue@next"></script>
+
+    <script>
+    
+       const app = Vue.createApp({
+
+         data : () => ({
+            products: [
+                
+            
+            { name: 'نان مغز دار شکلاتی', status: true,  store: 'خانه کیک آیناز', price:'48.000' , finalPrice:'36.000 ' , discount : '20%' , img:'assets/images/product-1.jpg'},
+            { name: 'باقلوا اعلا و درجه 1 یزدی', status: false, store: 'شیرینی حاج شهرام یزد', price:'54.000' , finalPrice:'39.500 ' , discount : '27%' , img: 'assets/images/product-2.jpg'},
+            { name: 'نان مغز دار شکلاتتوت خشک ارگانیک و محلی 1 کیلویی ', status: true, store: ' ادویه و خشک بار ناز گل روستانی ایکس', price:'58.000' , finalPrice:'48.500 ' , discount : '16%' , img: 'assets/images/product-3.jpg'},
+            { name: 'رومیزی ترمه بختیاری', status: true, store: 'ترمه النا یزد', price:'70.000' , finalPrice:'46.000 ' , discount : '34%', img: 'assets/images/product-4.jpg'},
+            { name: 'مزیتون درجه 1 فدک', status: false, store: 'مزرعه زیتون فدک', price:'18.000' , finalPrice:'17.000 ' , discount : '6%' , img: 'assets/images/product-5.jpg'},
+            { name: 'زعفران نگین 1 مثقالی', status: true, store: 'محصولات روستایی سبز رود', price:'36.000' , finalPrice:'43.000 ' , discount : '34%' , img: 'assets/images/product-6.jpg'},
+        
+        
+        ],
+        timeCounter : {
+            t : 0,
+            h : 1,
+            m : 2,
+            s : 3,
+
+
+         },
+         NameInput: '',
+         StoreInput: '',
+         PriceInput: '',
+         DiscountInput: '',
+         ImageInput: '',
+         style :"justify-content: space-between",
+         exist : true
+         }),
+
+        methods: {
+         status(index){
+             this.products[index].status =  !this.products[index].status
+         }   ,
+           copycode(){
+
+                        var copyText = document.getElementById("offercode");
+                var textArea = document.createElement("textarea");
+                textArea.value = copyText.textContent;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand("Copy");
+                textArea.remove();
+
+                var tooltip = document.getElementById("myTooltip");
+                tooltip.innerHTML = textArea.value + "کپی شد";
+
+           },
+          outFunc() {
+           var tooltip = document.getElementById("myTooltip");
+           tooltip.innerHTML = "کپی در کلیپ بورد";
+       },
+
+          addToLis() {
+              if (!this.NameInput && !this.StoreInput && !this.PriceInput && !this.DiscountInput && !this.ImageInput ){
+                  alert('لطفا تمامی مقادیر را پر کنید')
+              }
+              else if (this.products.length >= 6){
+
+                alert('تعداد محصولات تکمیل است ')
+               
+              }
+                else{
+                        this.products.push({ name: this.NameInput, store:  this.StoreInput, price: this.PriceInput, finalPrice: this.DiscountInput, discount: '20%', img: this.ImageInput });
+                    this.NameInput='';
+                    this.StoreInput= '';
+                    this.PriceInput= '';
+                    this.DiscountInput= '';
+                    this.ImageInput= '';
+                    if (this.products.length == 6) { this.style = "justify-content: space-between"}
+
+                }
+            
+            },
+            deleteFromList(index) {
+                this.products.splice(index, 1);
+                this.style = ""
+            },
+            // itemRefactor(){
+            //     if(this.products.lenght==6){
+                    
+                  
+                   
+            //     }else{
+            //         this.style = ""
+            //     }
+            // }
+       
+        },
+        
+        //     created() {
+        //        // send ajax request
+        //        this.text = 'test bio';
+        //    },
+        //      mounted() {
+        //        // DOM
+        //        // document.getElementById('textarea').focus();
+
+        //        document.addEventListener('keyup', this.itemRefactor);
+        //    },
+   
+     
+
         
 
-        return {
-            total,
-            hours,
-            minutes,
-            seconds
-        };
-    }
 
-    function initializeClock(counter, endtime) {
-        const clock = document.getElementById('counter');
-        const hoursSpan = clock.querySelector('.hours');
-        const minutesSpan = clock.querySelector('.minutes');
-        const secondsSpan = clock.querySelector('.seconds');
+        
 
-        function updateClock() {
-            const t = getTimeRemaining(endtime);
-            hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
-            minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
-            secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+       })
 
-            if (t.total <= 0) {
-                clearInterval(timeinterval);
+
+       app.mount('#app')
+
+       document.addEventListener('onload', this.itemRefactor);
+
+        function getTimeRemaining(endtime) {
+            const total = Date.parse(endtime) - Date.parse(new Date());
+            const seconds = Math.floor((total / 1000) % 60);
+            const minutes = Math.floor((total / 1000 / 60) % 60);
+            const hours = Math.floor((total / (1000 * 60 * 60)) % 24);
+
+
+            return {
+                total,
+                hours,
+                minutes,
+                seconds
+            };
+        }
+
+        function initializeClock(counter, endtime) {
+            const clock = document.getElementById('counter');
+            const hoursSpan = clock.querySelector('.hours');
+            const minutesSpan = clock.querySelector('.minutes');
+            const secondsSpan = clock.querySelector('.seconds');
+
+            function updateClock() {
+                const t = getTimeRemaining(endtime);
+                hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
+                minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
+                secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+
+                if (t.total <= 0) {
+                    clearInterval(timeinterval);
+                }
             }
+
+            updateClock();
+            const timeinterval = setInterval(updateClock, 1000);
         }
 
-        updateClock();
-        const timeinterval = setInterval(updateClock, 1000);
-    }
-
-    const deadline = new Date(Date.parse(new Date()) + 15 * 24 * 60 * 60 * 1000);
-    initializeClock('clockdiv', deadline);
 
 
-    function myFunction() {
-            var copyText = document.getElementById("offercode");
-            var textArea = document.createElement("textarea");
-            textArea.value = copyText.textContent;
-             document.body.appendChild(textArea);
-        textArea.select();
-        document.execCommand("Copy");
-        textArea.remove();
+        const deadline = new Date(Date.parse(new Date()) + 15 * 24 * 60 * 60 * 1000);
+      
+      
+        initializeClock('clockdiv', deadline);
 
-            var tooltip = document.getElementById("myTooltip");
-            tooltip.innerHTML =  textArea.value + "کپی شد" ;
-        }
 
-        function outFunc() {
-            var tooltip = document.getElementById("myTooltip");
-            tooltip.innerHTML = "کپی در کلیپ بورد";
-        }
 
-</script>
+
+
+
+
+
+      
+
+    </script>
 
 </body>
+
 </html>

@@ -10,8 +10,8 @@
 
 
 /* Large devices (desktops, less than 1200px) */
-
-   html{ font-size: 16px}
+   /*  for your Assurance */
+   html{ font-size: 16px} 
 
   /* Medium devices (tablets, less than 992px) */
 @media (max-width: 991.98px) { 
@@ -26,7 +26,10 @@
   html{ font-size: 9px!important;}
  } */
 body{
-    direction: rtl;
+    direction: rtl!important;
+}
+#app{
+    direction: rtl!important;
 }
 .container{
     
@@ -208,7 +211,7 @@ body{
     display: flex;   
     overflow-x: auto;
     align-items: stretch;
-    justify-content: space-between; 
+    /* justify-content: space-between;  */
       
 }
 .secondRow::-webkit-scrollbar {
@@ -365,4 +368,25 @@ body{
   .dicount .percent ,.dicount .min {
     font-size: 1.1rem;
    }
+}
+.adminPanel ul li{
+    list-style: none;
+    padding: 20px;
+}
+.adminPanel ul li:nth-child(odd){
+    background-color: white;
+    
+}
+.adminPanel ul li span {
+    float: left;
+    color:#dc3958;
+    display: block;
+    border-color: white;
+    transform: scale(.8);
+    transition: .2s all;
+  
+}
+.adminPanel ul li span:hover {
+    transform: scale(1);
+    cursor: pointer;  
 }
