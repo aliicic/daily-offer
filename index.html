@@ -10,7 +10,7 @@
 </head>
 
 <body>
-     <div id="app">
+    <div id="app">
         <div class="container">
             <div class="content">
                 <div class="firstRow">
@@ -20,22 +20,22 @@
                     </div>
                     <div class="leftContent">
                         <div class="offerBox"><span>کد تخفیف:</span><span><span class="code"
-                                    id="offercode">dailyoffer</span><span class="tooltip"><img  @click="copycode"
+                                    id="offercode">dailyoffer</span><span class="tooltip"><img @click="copycode"
                                         @mousenter="outFunc" id="copy" src="assets/images/copy.svg" alt=""><span
                                         class="tooltiptext" id="myTooltip">کپی شود؟</span></span></span></div>
                         <div class="timer" id="counter">
                             <div class="cnFrame">
                                 <span id="s" class="timeNum seconds"></span>
                             </div>
-        
+
                             <b style="font-weight: 900;font-size:1.5rem; margin: 1px;">:</b>
-        
+
                             <div class="cnFrame">
                                 <span id="m" class="timeNum minutes"></span>
                             </div>
-        
+
                             <b style="font-weight: 900;font-size:1.5rem; margin: 1px;">:</b>
-        
+
                             <div class="cnFrame">
                                 <span id="h" class="timeNum hours"></span>
                             </div>
@@ -44,68 +44,58 @@
                             <span>مشاهده همه</span>
                         </div>
                     </div>
-        
-        
+
+
                 </div>
-                
-                <div class="secondRow" id="productsRow" :style="style" >
-                  <clinet-side-items
-                   :products="products"
-                   :product ="product"
-                    v-for="(product, index) in products"
-                   :class="[ !product.status ? 'ended' : '' , 'item']"
-                  ></clinet-side-items> 
+
+                <div class="secondRow" id="productsRow" :style="style">
+                    <clinet-side-items :products="products" :product="product" v-for="(product, index) in products"
+                        :class="[ !product.status ? 'ended' : '' , 'item']"></clinet-side-items>
                 </div>
-              
-        
+
+
             </div>
 
-      
+
         </div>
 
-     <div class="adminPanel">
-     <h3>مدیریت محصولات دارای تخفیف </h3>
-     <h4>اضافه کردن محصول جدید</h3>
-     <div class="controller-box">
-     <label>نام محصول:</label>
-     <input type="text" v-model.trim="NameInput" >
-     <label> نام غرفه:</label>
-     <input type="text" v-model.trim="StoreInput">
-     <label> قیمت محصول:</label>
-     <input type="text" v-model.trim="PriceInput">
-     <label>میزان تخفیف: (درصد)</label>
-     <input type="text" v-model.trim="DiscountInput">
-     <label> تصویر محصول :</label>
-     <select name="cars" v-model="ImageInput">
-     <option v-for="(imge) in productsimg" :key="imge" :value="imge.img">{{imge.name}}</option>
+        <div class="adminPanel">
+            <h3>مدیریت محصولات دارای تخفیف </h3>
+            <h4>اضافه کردن محصول جدید</h3>
+                <div class="controller-box">
+                    <label>نام محصول:</label>
+                    <input type="text" v-model.trim="NameInput">
+                    <label> نام غرفه:</label>
+                    <input type="text" v-model.trim="StoreInput">
+                    <label> قیمت محصول:</label>
+                    <input type="text" v-model.trim="PriceInput">
+                    <label>میزان تخفیف: (درصد)</label>
+                    <input type="text" v-model.trim="DiscountInput">
+                    <label> تصویر محصول :</label>
+                    <select name="cars" v-model="ImageInput">
+                        <option v-for="(imge) in productsimg" :key="imge" :value="imge.img">{{imge.name}}</option>
 
-     </select>
+                    </select>
 
-    
+
+                </div>
+                <button class="submit-product-btn" @click="addToLis"> ثبت محصول</button>
+                <p>برای تغییر وضعیت موجودی رو کلمه موجود/ناموجود کلیک کنید </p>
+
+                <ul>
+
+                    <admin-item :products="products" :product="product" v-for="(product, index) in products"
+                        :index="index" :key="product" @checked="products[index].status =  !products[index].status"
+                        @deletee="deleteFromList(index)">
+
+
+
+                    </admin-item>
+                </ul>
+
+        </div>
+
     </div>
-    <button class="submit-product-btn" @click="addToLis"> ثبت محصول</button>
-    <p>برای تغییر وضعیت موجودی رو کلمه موجود/ناموجود کلیک کنید </p>
-   
-    <ul>
-        
-                <admin-item
-                :products="products"
-                :product ="product"
-                 v-for="(product, index) in products"
-                :index = "index"
-                :key="product"
-                @checked= "products[index].status =  !products[index].status"
-                @deletee="deleteFromList(index)"
-                >
-                 
-                
-              
-                </admin-item>
-    </ul>
-
-     </div>
-
-     </div>
 
 
 
@@ -113,150 +103,150 @@
     <script src="https://unpkg.com/vue@next"></script>
 
     <script>
-    
-       const app = Vue.createApp({
 
-         data : () => ({
-            products: [
-                
-            
-            { name: 'نان مغز دار شکلاتی', status: true,  store: 'خانه کیک آیناز', price:'48.000' , finalPrice:'36.000 ' , discount : '20%' , img:'assets/images/product-1.jpg'},
-            { name: 'باقلوا اعلا و درجه 1 یزدی', status: false, store: 'شیرینی حاج شهرام یزد', price:'54.000' , finalPrice:'39.500 ' , discount : '27%' , img: 'assets/images/product-2.jpg'},
-            { name: 'نان مغز دار شکلاتتوت خشک ارگانیک و محلی 1 کیلویی ', status: true, store: ' ادویه و خشک بار ناز گل روستانی ایکس', price:'58.000' , finalPrice:'48.500 ' , discount : '16%' , img: 'assets/images/product-3.jpg'},
-            { name: 'رومیزی ترمه بختیاری', status: true, store: 'ترمه النا یزد', price:'70.000' , finalPrice:'46.000 ' , discount : '34%', img: 'assets/images/product-4.jpg'},
-            { name: 'مزیتون درجه 1 فدک', status: false, store: 'مزرعه زیتون فدک', price:'18.000' , finalPrice:'17.000 ' , discount : '6%' , img: 'assets/images/product-5.jpg'},
-            { name: 'زعفران نگین 1 مثقالی', status: true, store: 'محصولات روستایی سبز رود', price:'36.000' , finalPrice:'43.000 ' , discount : '34%' , img: 'assets/images/product-6.jpg'},
-        
-        
-        ]
-        ,
+        const app = Vue.createApp({
 
-        productsimg : [
-            
-        {name: 'نان مغز دار شکلاتی' , img : 'assets/images/product-1.jpg'},
-        { name: 'باقلوا اعلا و درجه 1 یزدی', img : 'assets/images/product-2.jpg'},
-        { name: 'نان مغز دار شکلاتتوت خشک ارگانیک و محلی 1 کیلویی ', img : 'assets/images/product-3.jpg'},
-        { name: 'رومیزی ترمه بختیاری', img : 'assets/images/product-4.jpg'},
-        { name: 'مزیتون درجه 1 فدک', img : 'assets/images/product-5.jpg'},
-        { name: 'زعفران نگین 1 مثقالی', img : 'assets/images/product-6.jpg'},
-    
-    ],
-        
-        
-         NameInput: '',
-         StoreInput: '',
-         PriceInput: '',
-         DiscountInput: '',
-         ImageInput: '',
-         finalp : 0,
-         style :"justify-content: space-between",
-         exist : true
-         }),
+            data: () => ({
+                products: [
 
-        methods: {
-       
-           status(index){
-             this.products[index].status =  !this.products[index].status
-         }   ,
-           copycode(){
 
-                        var copyText = document.getElementById("offercode");
-                var textArea = document.createElement("textarea");
-                textArea.value = copyText.textContent;
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand("Copy");
-                textArea.remove();
+                    { name: 'نان مغز دار شکلاتی', status: true, store: 'خانه کیک آیناز', price: '48.000', finalPrice: '36.000 ', discount: '20%', img: 'assets/images/product-1.jpg' },
+                    { name: 'باقلوا اعلا و درجه 1 یزدی', status: false, store: 'شیرینی حاج شهرام یزد', price: '54.000', finalPrice: '39.500 ', discount: '27%', img: 'assets/images/product-2.jpg' },
+                    { name: 'نان مغز دار شکلاتتوت خشک ارگانیک و محلی 1 کیلویی ', status: true, store: ' ادویه و خشک بار ناز گل روستانی ایکس', price: '58.000', finalPrice: '48.500 ', discount: '16%', img: 'assets/images/product-3.jpg' },
+                    { name: 'رومیزی ترمه بختیاری', status: true, store: 'ترمه النا یزد', price: '70.000', finalPrice: '46.000 ', discount: '34%', img: 'assets/images/product-4.jpg' },
+                    { name: 'مزیتون درجه 1 فدک', status: false, store: 'مزرعه زیتون فدک', price: '18.000', finalPrice: '17.000 ', discount: '6%', img: 'assets/images/product-5.jpg' },
+                    { name: 'زعفران نگین 1 مثقالی', status: true, store: 'محصولات روستایی سبز رود', price: '36.000', finalPrice: '43.000 ', discount: '34%', img: 'assets/images/product-6.jpg' },
 
-                var tooltip = document.getElementById("myTooltip");
-                tooltip.innerHTML = textArea.value + "کپی شد";
 
-           },
-           outFunc() {
-           var tooltip = document.getElementById("myTooltip");
-           tooltip.innerHTML = "کپی در کلیپ بورد";
-       },
-           addToLis() {
-              if (!this.NameInput && !this.StoreInput && !this.PriceInput && !this.DiscountInput && !this.ImageInput ){
-                  alert('لطفا تمامی مقادیر را پر کنید')
-              }
-              else if (this.products.length >= 6){
+                ]
+                ,
 
-                alert('تعداد محصولات تکمیل است ')
-               
-              }
-                else{
+                productsimg: [
 
-                    var  inirtialprice =parseFloat(this.PriceInput );
-                    var  discprice  =   inirtialprice* (parseFloat(this.DiscountInput)/100);
-                    var finalpricee =  inirtialprice - discprice; 
-                    this.products.push({ name: this.NameInput, store:  this.StoreInput, price: this.PriceInput, finalPrice: finalpricee.toString(), discount:this.DiscountInput,  img: this.ImageInput });
-                    this.NameInput='';
-                    this.StoreInput= '';
-                    this.PriceInput= '';
-                    this.DiscountInput= '';
-                    this.ImageInput= '';
-                    if (this.products.length == 6) { this.style = "justify-content: space-between"}
+                    { name: 'نان مغز دار شکلاتی', img: 'assets/images/product-1.jpg' },
+                    { name: 'باقلوا اعلا و درجه 1 یزدی', img: 'assets/images/product-2.jpg' },
+                    { name: 'نان مغز دار شکلاتتوت خشک ارگانیک و محلی 1 کیلویی ', img: 'assets/images/product-3.jpg' },
+                    { name: 'رومیزی ترمه بختیاری', img: 'assets/images/product-4.jpg' },
+                    { name: 'مزیتون درجه 1 فدک', img: 'assets/images/product-5.jpg' },
+                    { name: 'زعفران نگین 1 مثقالی', img: 'assets/images/product-6.jpg' },
 
-                }
-            
+                ],
+
+
+                NameInput: '',
+                StoreInput: '',
+                PriceInput: '',
+                DiscountInput: '',
+                ImageInput: '',
+                finalp: 0,
+                style: "justify-content: space-between",
+                exist: true
+            }),
+
+            methods: {
+
+                status(index) {
+                    this.products[index].status = !this.products[index].status
+                },
+                copycode() {
+
+                    var copyText = document.getElementById("offercode");
+                    var textArea = document.createElement("textarea");
+                    textArea.value = copyText.textContent;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand("Copy");
+                    textArea.remove();
+
+                    var tooltip = document.getElementById("myTooltip");
+                    tooltip.innerHTML = textArea.value + "کپی شد";
+
+                },
+                outFunc() {
+                    var tooltip = document.getElementById("myTooltip");
+                    tooltip.innerHTML = "کپی در کلیپ بورد";
+                },
+                addToLis() {
+                    if (!this.NameInput || !this.StoreInput || !this.PriceInput || !this.DiscountInput || !this.ImageInput) {
+                        alert('لطفا تمامی مقادیر را پر کنید')
+                    }
+                    else if (this.products.length >= 6) {
+
+                        alert('تعداد محصولات تکمیل است ')
+
+                    }
+                    else {
+
+                        var inirtialprice = parseFloat(this.PriceInput);
+                        var discprice = inirtialprice * (parseFloat(this.DiscountInput) / 100);
+                        var finalpricee = inirtialprice - discprice;
+                        this.products.push({ name: this.NameInput, store: this.StoreInput, price: this.PriceInput, finalPrice: finalpricee.toString(), discount: this.DiscountInput, img: this.ImageInput });
+                        this.NameInput = '';
+                        this.StoreInput = '';
+                        this.PriceInput = '';
+                        this.DiscountInput = '';
+                        this.ImageInput = '';
+                        if (this.products.length == 6) { this.style = "justify-content: space-between" }
+
+                    }
+
+                },
+                deleteFromList(index) {
+                    this.products.splice(index, 1);
+                    this.style = ""
+                    // console.log('this is okay')
+                },
+
+
             },
-           deleteFromList(index) {
-                this.products.splice(index, 1);
-                this.style = ""
-                // console.log('this is okay')
+            created() {
+                // send ajax request
+
             },
-          
-       
-        },
-           created() {
-            // send ajax request
-             
-           },
-           mounted() {
-            // DOM
-         
-           },
+            mounted() {
+                // DOM
 
- 
+            },
 
-       })
+
+
+        })
         //admin item component
         app.component('admin-item', {
-             template:
-               `
+            template:
+                `
              
                <li> نام محصول : {{product.name}}  غرفه : {{product.store}}  قیمت : {{product.price}} تخفیف: {{product.discount}} <span @click="deletee(index)">حذف محصول</span> <span @click="checked(index)"> {{ product.status ? 'موجود' : "ناموجود"}}  </span></li>
            
                ` ,
-                     
-            
-           
-             props: ['products' , 'product' , 'index'] ,
 
-  
-              
-             methods: {
 
-                        deletee(index) {
-                            this.$emit('deletee', index)
-                            // console.log(index)
-                        },
-                        checked(index) {
-                            this.$emit('checked', index)
-                            // console.log(index)
-                        },
 
-                     }
-                
-                
-                
-                
-                    }); 
+            props: ['products', 'product', 'index'],
+
+
+
+            methods: {
+
+                deletee(index) {
+                    this.$emit('deletee', index)
+                    // console.log(index)
+                },
+                checked(index) {
+                    this.$emit('checked', index)
+                    // console.log(index)
+                },
+
+            }
+
+
+
+
+        });
         // products component    
-        app.component('clinet-side-items' ,{
+        app.component('clinet-side-items', {
 
-               template :
+            template:
                 `
                      <div >
                         <div class="product">
@@ -290,10 +280,10 @@
                
                 ` ,
 
-                props: ['products', 'product', 'index'],
+            props: ['products', 'product', 'index'],
 
-             })
-              
+        })
+
         app.mount('#app')
 
         // timer
@@ -342,7 +332,7 @@
 
 
 
-      
+
 
     </script>
 
