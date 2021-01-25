@@ -47,69 +47,66 @@
         
         
                 </div>
-                <!-- <div class="scroll-bar"> -->
+                
                 <div class="secondRow" id="productsRow" :style="style" >
-                    <div v-for="(product, index) in products" :key="product"   :class="[ !product.status ? 'ended' : 'react' , 'item']" >
-                        <div class="product">
-                            <div class="imageFrame">
-                                <a class="endtitle" href="">تمام شد </a>
-                                <img v-bind:src="product.img" alt="">
-                            </div>
-                            <div class="productsContent">
-                                <div class="heading">
-                                    <a href="#" class="title">
-                                        {{product.name}}
-                                    </a>
-                                </div>
-                                <div class="desc">
-                                    <span>غرفه:</span>
-                                    <a href="#">{{product.store}}</a>
-                                </div>
-                                <div class="dicount">
-                                    <span class="min">{{product.price}}</span>
-                                    <span class="percent">{{product.discount}}</span>
-                                </div>
-                                <div class="bottomRow">
-                                    <div class="more">:</div>
-                                    <div><span class="price">{{product.finalPrice}}</span><span><img src="assets/images/toman.svg"
-                                                alt=""></span></div>
-        
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-  
-        
-        
+                  <clinet-side-items
+                   :products="products"
+                   :product ="product"
+                    v-for="(product, index) in products"
+                   :class="[ !product.status ? 'ended' : '' , 'item']"
+                  ></clinet-side-items> 
                 </div>
-                <!-- </div>     -->
+              
         
             </div>
 
       
         </div>
 
-     <div class="adminPanel" style="background:rgb(229, 229, 248) ;padding:20px 50px">
-     <h3 style="text-align: center; margin-top: 50px; margin-bottom: 100px;">مدیریت محصولات دارای تخفیف </h3>
-     <h3 style="text-align: center;margin-bottom:50px">اضافه کردن محصول جدید</h3>
-     <div class="controller-box" style="display: flex;justify-content: space-between; align-items: stretch; ">
+     <div class="adminPanel">
+     <h3>مدیریت محصولات دارای تخفیف </h3>
+     <h4>اضافه کردن محصول جدید</h3>
+     <div class="controller-box">
      <label>نام محصول:</label>
-     <input type="text" v-model="NameInput" >
+     <input type="text" v-model.trim="NameInput" >
      <label> نام غرفه:</label>
-     <input type="text" v-model="StoreInput">
+     <input type="text" v-model.trim="StoreInput">
      <label> قیمت محصول:</label>
-     <input type="text" v-model="PriceInput">
+     <input type="text" v-model.trim="PriceInput">
      <label> میزان تخفیف:</label>
-     <input type="text" v-model="DiscountInput">
+     <input type="text" v-model.trim="DiscountInput">
      <label> تصویر محصول :</label>
-     <input type="text" v-model="ImageInput">
+     <select name="cars" v-model.trim="ImageInput">
+     <option value="assets/images/product-1.jpg">عکس اول </option>
+     <option value="assets/images/product-2.jpg">عکس دوم </option>
+     <option value="assets/images/product-3.jpg">عکس سوم </option>
+     <option value="assets/images/product-4.jpg">عکس چهارم</option>
+     <option value="assets/images/product-5.jpg">عکس پنجم</option>
+     <option value="assets/images/product-6.jpg">عکس ششم</option>
+     </select>
+
     
     </div>
-    <button @click="addToLis" style="display: block;margin: 30px auto; background:#dc3958; outline:none; border: 1px solid white; border-radius: 20px; padding: 10px 40px;"> ثبت محصول</button>
+    <button class="submit-product-btn" @click="addToLis"> ثبت محصول</button>
    
-    <ul><li v-for="(product, index) in products" :key="product"> نام محصول : {{product.name}}  غرفه : {{product.store}}  قیمت : {{product.price}} تخفیف: {{product.discount}} <span @click="deleteFromList">حذف محصول</span> <span @click="status(index)"> {{ product.status ? 'موجود' : "ناموجود"}}  </span></li></ul>
+    <ul>
+        
+                <admin-item
+                :products="products"
+                :product ="product"
+                 v-for="(product, index) in products"
+                :index = "index"
+                :key="product"
+                @checked= "products[index].status =  !products[index].status"
+                @deletee="deleteFromList(index)"
+                >
+                 
+                
+              
+                </admin-item>
+    </ul>
 
-</div>
+     </div>
 
      </div>
 
@@ -196,43 +193,91 @@
                 }
             
             },
-            deleteFromList(index) {
+          deleteFromList(index) {
                 this.products.splice(index, 1);
                 this.style = ""
+                // console.log('this is okay')
             },
-            // itemRefactor(){
-            //     if(this.products.lenght==6){
-                    
-                  
-                   
-            //     }else{
-            //         this.style = ""
-            //     }
-            // }
+          
        
         },
-        
-        //     created() {
-        //        // send ajax request
-        //        this.text = 'test bio';
-        //    },
-        //      mounted() {
-        //        // DOM
-        //        // document.getElementById('textarea').focus();
 
-        //        document.addEventListener('keyup', this.itemRefactor);
-        //    },
-   
-     
-
-        
-
-
-        
+ 
 
        })
 
+             app.component('admin-item', {
+                    template:
+               `
+             
+               <li> نام محصول : {{product.name}}  غرفه : {{product.store}}  قیمت : {{product.price}} تخفیف: {{product.discount}} <span @click="deletee(index)">حذف محصول</span> <span @click="checked(index)"> {{ product.status ? 'موجود' : "ناموجود"}}  </span></li>
+           
+               ` ,
+                     
+            
+           
+             props: ['products' , 'product' , 'index'] ,
 
+  
+              
+             methods: {
+
+                        deletee(index) {
+                            this.$emit('deletee', index)
+                            // console.log(index)
+                        },
+                        checked(index) {
+                            this.$emit('checked', index)
+                            // console.log(index)
+                        },
+
+                     }
+                
+                
+                
+                
+                    }); 
+            
+             app.component('clinet-side-items' ,{
+
+               template :
+                `
+                     <div >
+                        <div class="product">
+                            <div class="imageFrame">
+                                <a class="endtitle" href="">تمام شد </a>
+                                <img v-bind:src="product.img" alt="">
+                            </div>
+                            <div class="productsContent">
+                                <div class="heading">
+                                    <a href="#" class="title">
+                                        {{product.name}}
+                                    </a>
+                                </div>
+                                <div class="desc">
+                                    <span>غرفه:</span>
+                                    <a href="#">{{product.store}}</a>
+                                </div>
+                                <div class="dicount">
+                                    <span class="min">{{product.price}}</span>
+                                    <span class="percent">{{product.discount}}</span>
+                                </div>
+                                <div class="bottomRow">
+                                    <div class="more">:</div>
+                                    <div><span class="price">{{product.finalPrice}}</span><span><img src="assets/images/toman.svg"
+                                                alt=""></span></div>
+        
+                                </div>
+                            </div>
+                        </div>
+                    </div>    
+               
+                ` ,
+
+                props: ['products', 'product', 'index'],
+
+             })
+              
        app.mount('#app')
 
        document.addEventListener('onload', this.itemRefactor);

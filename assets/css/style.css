@@ -369,13 +369,75 @@ body{
     font-size: 1.1rem;
    }
 }
+
+
+.adminPanel{
+   background:rgb(229, 229, 248) ;padding:20px 50px 
+}
+.adminPanel h3 {
+text-align: center; margin-top: 50px; margin-bottom: 100px;
+
+}
+.adminPanel h4 {
+   text-align: center;
+   margin-bottom:50px
+}
+.controller-box{
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;  
+}
+
+
+
+
+
 .adminPanel ul li{
     list-style: none;
     padding: 20px;
 }
+@media(max-width:992px){
+    .controller-box{
+        display:block;
+        padding:10px 40px;
+    }
+    .controller-box input  , .controller-box select{
+        width: 100%;
+        margin-bottom: 10px;
+        
+    }
+    .adminPanel{
+        padding: 0;
+    }
+    .adminPanel ul {
+    
+    padding: 20px 0;
+}
+.adminPanel ul li{
+    display: flex;
+ 
+}
+
+ 
+   .adminPanel ul li span:nth-child(1) {
+    
+    width: 20%;
+
+   } 
+   .adminPanel ul li span:nth-child(2) {
+    
+    margin-right: auto;
+
+   } 
+
+}
 .adminPanel ul li:nth-child(odd){
     background-color: white;
+
     
+}
+.adminPanel ul li span:nth-child(1) {
+    color :green;
 }
 .adminPanel ul li span {
     float: left;
@@ -389,4 +451,24 @@ body{
 .adminPanel ul li span:hover {
     transform: scale(1);
     cursor: pointer;  
+}
+.submit-product-btn{
+
+display: block;
+margin: 30px auto;
+background:#dc3958;
+outline:none;
+border: 1px solid #dc3958; 
+border-radius: 20px; 
+padding: 10px 40px;  
+transition : .5s all; 
+cursor: pointer;
+
+}
+.submit-product-btn:hover{
+
+background:white;
+color:#dc3958 ;
+border-color: #dc3958 ;
+
 }
