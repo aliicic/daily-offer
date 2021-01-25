@@ -25,7 +25,7 @@
                                         class="tooltiptext" id="myTooltip">کپی شود؟</span></span></span></div>
                         <div class="timer" id="counter">
                             <div class="cnFrame">
-                                <span id="s" class="timeNum seconds">{{timeCounter.s}}</span>
+                                <span id="s" class="timeNum seconds"></span>
                             </div>
         
                             <b style="font-weight: 900;font-size:1.5rem; margin: 1px;">:</b>
@@ -73,21 +73,18 @@
      <input type="text" v-model.trim="StoreInput">
      <label> قیمت محصول:</label>
      <input type="text" v-model.trim="PriceInput">
-     <label> میزان تخفیف:</label>
+     <label>میزان تخفیف: (درصد)</label>
      <input type="text" v-model.trim="DiscountInput">
      <label> تصویر محصول :</label>
-     <select name="cars" v-model.trim="ImageInput">
-     <option value="assets/images/product-1.jpg">عکس اول </option>
-     <option value="assets/images/product-2.jpg">عکس دوم </option>
-     <option value="assets/images/product-3.jpg">عکس سوم </option>
-     <option value="assets/images/product-4.jpg">عکس چهارم</option>
-     <option value="assets/images/product-5.jpg">عکس پنجم</option>
-     <option value="assets/images/product-6.jpg">عکس ششم</option>
+     <select name="cars" v-model="ImageInput">
+     <option v-for="(imge) in productsimg" :key="imge" :value="imge.img">{{imge.name}}</option>
+
      </select>
 
     
     </div>
     <button class="submit-product-btn" @click="addToLis"> ثبت محصول</button>
+    <p>برای تغییر وضعیت موجودی رو کلمه موجود/ناموجود کلیک کنید </p>
    
     <ul>
         
@@ -131,26 +128,34 @@
             { name: 'زعفران نگین 1 مثقالی', status: true, store: 'محصولات روستایی سبز رود', price:'36.000' , finalPrice:'43.000 ' , discount : '34%' , img: 'assets/images/product-6.jpg'},
         
         
-        ],
-        timeCounter : {
-            t : 0,
-            h : 1,
-            m : 2,
-            s : 3,
+        ]
+        ,
 
-
-         },
+        productsimg : [
+            
+        {name: 'نان مغز دار شکلاتی' , img : 'assets/images/product-1.jpg'},
+        { name: 'باقلوا اعلا و درجه 1 یزدی', img : 'assets/images/product-2.jpg'},
+        { name: 'نان مغز دار شکلاتتوت خشک ارگانیک و محلی 1 کیلویی ', img : 'assets/images/product-3.jpg'},
+        { name: 'رومیزی ترمه بختیاری', img : 'assets/images/product-4.jpg'},
+        { name: 'مزیتون درجه 1 فدک', img : 'assets/images/product-5.jpg'},
+        { name: 'زعفران نگین 1 مثقالی', img : 'assets/images/product-6.jpg'},
+    
+    ],
+        
+        
          NameInput: '',
          StoreInput: '',
          PriceInput: '',
          DiscountInput: '',
          ImageInput: '',
+         finalp : 0,
          style :"justify-content: space-between",
          exist : true
          }),
 
         methods: {
-         status(index){
+       
+           status(index){
              this.products[index].status =  !this.products[index].status
          }   ,
            copycode(){
@@ -167,12 +172,11 @@
                 tooltip.innerHTML = textArea.value + "کپی شد";
 
            },
-          outFunc() {
+           outFunc() {
            var tooltip = document.getElementById("myTooltip");
            tooltip.innerHTML = "کپی در کلیپ بورد";
        },
-
-          addToLis() {
+           addToLis() {
               if (!this.NameInput && !this.StoreInput && !this.PriceInput && !this.DiscountInput && !this.ImageInput ){
                   alert('لطفا تمامی مقادیر را پر کنید')
               }
@@ -182,7 +186,11 @@
                
               }
                 else{
-                        this.products.push({ name: this.NameInput, store:  this.StoreInput, price: this.PriceInput, finalPrice: this.DiscountInput, discount: '20%', img: this.ImageInput });
+
+                    var  inirtialprice =parseFloat(this.PriceInput );
+                    var  discprice  =   inirtialprice* (parseFloat(this.DiscountInput)/100);
+                    var finalpricee =  inirtialprice - discprice; 
+                    this.products.push({ name: this.NameInput, store:  this.StoreInput, price: this.PriceInput, finalPrice: finalpricee.toString(), discount:this.DiscountInput,  img: this.ImageInput });
                     this.NameInput='';
                     this.StoreInput= '';
                     this.PriceInput= '';
@@ -193,7 +201,7 @@
                 }
             
             },
-          deleteFromList(index) {
+           deleteFromList(index) {
                 this.products.splice(index, 1);
                 this.style = ""
                 // console.log('this is okay')
@@ -201,13 +209,21 @@
           
        
         },
+           created() {
+            // send ajax request
+             
+           },
+           mounted() {
+            // DOM
+         
+           },
 
  
 
        })
-
-             app.component('admin-item', {
-                    template:
+        //admin item component
+        app.component('admin-item', {
+             template:
                `
              
                <li> نام محصول : {{product.name}}  غرفه : {{product.store}}  قیمت : {{product.price}} تخفیف: {{product.discount}} <span @click="deletee(index)">حذف محصول</span> <span @click="checked(index)"> {{ product.status ? 'موجود' : "ناموجود"}}  </span></li>
@@ -237,8 +253,8 @@
                 
                 
                     }); 
-            
-             app.component('clinet-side-items' ,{
+        // products component    
+        app.component('clinet-side-items' ,{
 
                template :
                 `
@@ -278,10 +294,10 @@
 
              })
               
-       app.mount('#app')
+        app.mount('#app')
 
-       document.addEventListener('onload', this.itemRefactor);
-
+        // timer
+        document.addEventListener('onload', this.itemRefactor);
         function getTimeRemaining(endtime) {
             const total = Date.parse(endtime) - Date.parse(new Date());
             const seconds = Math.floor((total / 1000) % 60);
@@ -296,7 +312,6 @@
                 seconds
             };
         }
-
         function initializeClock(counter, endtime) {
             const clock = document.getElementById('counter');
             const hoursSpan = clock.querySelector('.hours');
@@ -317,12 +332,7 @@
             updateClock();
             const timeinterval = setInterval(updateClock, 1000);
         }
-
-
-
         const deadline = new Date(Date.parse(new Date()) + 15 * 24 * 60 * 60 * 1000);
-      
-      
         initializeClock('clockdiv', deadline);
 
 
